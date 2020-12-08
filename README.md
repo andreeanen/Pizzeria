@@ -27,18 +27,17 @@ lagersystemet (för att hålla koll på lagersaldo på ingredienser), samt att v
 på en skärm i köket för pizzabagarna att veta vad de ska laga.
 
 Menyn för restaurangen ser ut som följande:
-● Margerita - Ost, tomatsås - 85kr
-● Hawaii - Ost, tomatsås, skinka, ananas - 95kr
-● Kebabpizza - Ost, tomatsås, kebab, champinjoner, lök, feferoni, isbergssallad, tomat
-kebabsås - 105kr
-● Quatro Stagioni - Ost, tomatsås, skinka, räkor, musslor, champinjoner, kronärtskocka
-- 115kr
-● Coca cola - 20kr
-● Fanta - 20kr
-● Sprite - 25kr
-● Extra ingrediens - Skinka, ananas, champinjoner, lök, kebabsås - 10kr
-● Extra ingrediens - Räkor, musslor, kronärtskocka - 15kr
-● Extra ingrediens - Kebab, koriander - 20kr
+        
+* Margerita - Ost, tomatsås - 85kr
+* Hawaii - Ost, tomatsås, skinka, ananas - 95kr
+* Kebabpizza - Ost, tomatsås, kebab, champinjoner, lök, feferoni, isbergssallad, tomat kebabsås - 105kr
+* Quatro Stagioni - Ost, tomatsås, skinka, räkor, musslor, champinjoner, kronärtskocka - 115kr
+* Coca cola - 20kr
+* Fanta - 20kr
+* Sprite - 25kr
+* Extra ingrediens - Skinka, ananas, champinjoner, lök, kebabsås - 10kr
+* Extra ingrediens - Räkor, musslor, kronärtskocka - 15kr
+* Extra ingrediens - Kebab, koriander - 20kr
 
 #### Redovisning
 Källkoden ska vara pushad till ett eget publikt repository på GitHub. Uppgiften ska
