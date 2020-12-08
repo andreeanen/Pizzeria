@@ -11,7 +11,7 @@ namespace Pizzeria_API.Models
         private Guid _id;
         private string _name;
         private double _price;
-        private List<ProductFactory> _ingredients;
+        private List<ProductFactory> _ingredients = new List<ProductFactory>();
 
         public Pizza(string name, double price, List<ProductFactory> ingredients)
         {

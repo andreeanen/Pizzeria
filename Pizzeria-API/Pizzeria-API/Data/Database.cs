@@ -9,10 +9,10 @@ namespace Pizzeria_API.Data
 {
     public class Database
     {
-        Queue<Order> Orders = new Queue<Order>();
-        List<ProductFactory> Menu = new List<ProductFactory>();
+        public Queue<Order> Orders { get; set; }
+        public List<ProductFactory> Menu {get;set;}
                
-        public void Initialize()
+        public List<ProductFactory> InitializeMenu()
         {
             ProductFactory ham = new IngredientFactory("ham", 10);
             ProductFactory pineapple = new IngredientFactory("pineapple", 10);
@@ -55,6 +55,7 @@ namespace Pizzeria_API.Data
             ProductFactory fanta = new SodaFactory("Fanta", 20);
             ProductFactory sprite = new SodaFactory("Sprite", 20);
 
+            Menu = new List<ProductFactory>();
             Menu.Add(ham);
             Menu.Add(pineapple);
             Menu.Add(mushrooms);
@@ -78,13 +79,15 @@ namespace Pizzeria_API.Data
             Menu.Add(fanta);
             Menu.Add(sprite);
 
-            Orders.Enqueue(new Order
-            {
-                Id = new Guid(),
-                TotalSum = 200,
-                Status = Status.Submitted,
-                Products = new List<ProductFactory>() {margerita,cocaCola,coriander }
-            }); 
+            return Menu;
+
+            //Orders.Enqueue(new Order
+            //{
+            //    Id = new Guid(),
+            //    TotalSum = 200,
+            //    Status = Status.Submitted,
+            //    Products = new List<ProductFactory>() {margerita,cocaCola,coriander }
+            //}); 
 
         }
     }

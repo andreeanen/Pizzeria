@@ -10,7 +10,7 @@ namespace Pizzeria_API.Data.Factory
      {
         private string _name;
         private double _price;
-
+        
         public IngredientFactory(string name, double price)
         {
             _name = name;
