@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pizzeria_API.Data.Factory
 {
-     class IngredientFactory:ProductFactory
+     public class IngredientFactory:ProductFactory
      {
         private string _name;
         private double _price;

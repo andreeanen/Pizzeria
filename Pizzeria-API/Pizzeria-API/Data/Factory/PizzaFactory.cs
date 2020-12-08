@@ -10,9 +10,9 @@ namespace Pizzeria_API.Data.Factory
     {
         private string _name;
         private double _price;
-        private List<Ingredient> _ingredients;
+        private List<ProductFactory> _ingredients;
 
-        public PizzaFactory(string name, double price, List<Ingredient> ingredients)
+        public PizzaFactory(string name, double price, List<ProductFactory> ingredients)
         {
             _name = name;
             _price = price;

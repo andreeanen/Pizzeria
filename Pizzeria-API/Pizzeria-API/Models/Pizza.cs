@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pizzeria_API.Data.Factory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,9 +11,9 @@ namespace Pizzeria_API.Models
         private Guid _id;
         private string _name;
         private double _price;
-        private List<Ingredient> _ingredients;
+        private List<ProductFactory> _ingredients;
 
-        public Pizza(string name, double price, List<Ingredient> ingredients)
+        public Pizza(string name, double price, List<ProductFactory> ingredients)
         {
 
             _id = new Guid();
@@ -34,7 +35,7 @@ namespace Pizzeria_API.Models
         {
             get { return _price; }
         }
-        public List<Ingredient> Ingredients
+        public List<ProductFactory> Ingredients
         {
             get { return _ingredients; }
         }
