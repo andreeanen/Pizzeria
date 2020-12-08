@@ -2,10 +2,31 @@
 
 namespace Pizzeria_API.Models
 {
-    public class Ingredient : IProduct
+     class Ingredient : Product
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public double Price { get; set; }
+        private Guid _id;
+        private string _name;
+        private double _price;
+
+        public Ingredient(string name, double price)
+        {
+            _id = new Guid();
+            _name = name;
+            _price = price;
+        }
+
+        public override string Name
+        {
+            get { return _name; }
+        }
+        public override Guid Id
+        {
+            get { return _id; }
+        }
+
+        public override double Price
+        {
+            get { return _price; }
+        }
     }
 }

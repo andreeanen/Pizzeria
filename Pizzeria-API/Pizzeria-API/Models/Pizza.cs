@@ -5,11 +5,39 @@ using System.Threading.Tasks;
 
 namespace Pizzeria_API.Models
 {
-    public class Pizza : IProduct
+    class Pizza : Product
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public double Price { get; set; }
-        public List<Ingredient> Ingredients { get; set; }
+        private Guid _id;
+        private string _name;
+        private double _price;
+        private List<Ingredient> _ingredients;
+
+        public Pizza(string name, double price, List<Ingredient> ingredients)
+        {
+
+            _id = new Guid();
+            _name = name;
+            _price = price;
+            _ingredients = ingredients; // instantiate maybe 
+        }
+
+        public override string Name
+        {
+            get { return _name; }
+        }
+        public override Guid Id
+        {
+            get { return _id; }
+        }
+
+        public override double Price
+        {
+            get { return _price; }
+        }
+        public List<Ingredient> Ingredients
+        {
+            get { return _ingredients; }
+        }
+
     }
 }
