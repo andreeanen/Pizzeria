@@ -6,20 +6,58 @@ using System.Threading.Tasks;
 
 namespace Pizzeria_API.Data.Factory
 {
-     class SodaFactory: ProductFactory
+    public class SodaFactory : ItemFactory<Soda>
     {
-        private string _name;
-        private double _price;
-
-        public SodaFactory(string name, double price)
+        protected override Soda CreateItem(string name)
         {
-            _name = name;
-            _price = price;
-        }
-
-        public override Product GetProduct()
-        {
-            return new Soda(_name, _price);
+            switch (name)
+            {
+                case (nameof(Fanta)):
+                    {
+                        return new Fanta();
+                    }
+                case (nameof(CocaCola)):
+                    {
+                        return new CocaCola();
+                    }
+                case (nameof(Sprite)):
+                    {
+                        return new Sprite();
+                    }
+                default:
+                    {
+                        return null;
+                    }
+            }
         }
     }
+
+    public class Fanta : Soda
+    {
+        public Fanta()
+        {
+            Id = new Guid();
+            Name = "Fanta";
+            Price = 20;
+        }
+    }
+    public class CocaCola : Soda
+    {
+        public CocaCola()
+        {
+            Id = new Guid();
+            Name = "Coca Cola";
+            Price = 20;
+        }
+    }
+    public class Sprite : Soda
+    {
+        public Sprite()
+        {
+            Id = new Guid();
+            Name = "Sprite";
+            Price = 25;
+        }
+    }
+
 }

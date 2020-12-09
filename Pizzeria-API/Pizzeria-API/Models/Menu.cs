@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace Pizzeria_API.Models
 {
-    public abstract class Product
+    public class Menu
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public double Price { get; set; }
+        public List<Product> Pizzas { get; set; }
+        public List<Soda> Sodas { get; set; }
         public List<Ingredient> Ingredients { get; set; }
     }
 }
- 

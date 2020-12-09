@@ -18,33 +18,28 @@ namespace Pizzeria_API.Controllers
     public class ProductController : ControllerBase
     {
         private Database _database;
-        private List<ProductFactory> _menu;
+        private Menu _menu;
 
         public ProductController()
         {
             _database = new Database();
-            _database.InitializeMenu();
-            _menu = _database.Menu;
+            _menu = _database.InitializeMenu();
         }
 
-        [HttpGet]
-        public Product Get()
-        {
-            var product =  _menu.Where(x => x.GetProduct().Name == "Hawaii").ToArray();
-            foreach (var item in product)
-            {
-                item.GetProduct();
-            }
-
-            return product[0].GetProduct();
-        }
         //// GET: api/<ProductController>
-        //[HttpGet]
-        //public string Get()
-        //{
-        //    var product= _menu.Where(x=>x.GetProduct().Name =="Hawaii").ToArray();
-        //    return JsonConvert.SerializeObject(product);
-        //}
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var products = _menu;
+            if (products == null)
+            {
+                return NotFound();
+            }
+          
+            return Ok(products);
+
+        }
+       
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
         public string Get(int id)

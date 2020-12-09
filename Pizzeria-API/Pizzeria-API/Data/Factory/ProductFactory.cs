@@ -8,6 +8,12 @@ namespace Pizzeria_API.Data.Factory
 {
     public abstract class ProductFactory
     {
-        public abstract Product GetProduct();
-    }
+        public Product GetProduct(string name)
+		{
+			var product = CreateProduct(name);
+			return product;
+		}
+
+		protected abstract Product CreateProduct(string name);
+	}
 }

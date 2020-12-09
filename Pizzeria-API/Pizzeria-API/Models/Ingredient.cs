@@ -1,32 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pizzeria_API.Models
 {
-     class Ingredient : Product
+    public class Ingredient
     {
-        private Guid _id;
-        private string _name;
-        private double _price;
-
-        public Ingredient(string name, double price)
-        {
-            _id = new Guid();
-            _name = name;
-            _price = price;
-        }
-
-        public override string Name
-        {
-            get { return _name; }
-        }
-        public override Guid Id
-        {
-            get { return _id; }
-        }
-
-        public override double Price
-        {
-            get { return _price; }
-        }
+        public Guid Id { get ; set ; }
+        public string Name { get ; set ; }
+        public double Price { get ; set ; }
     }
 }

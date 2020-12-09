@@ -6,20 +6,149 @@ using System.Threading.Tasks;
 
 namespace Pizzeria_API.Data.Factory
 {
-     public class IngredientFactory:ProductFactory
-     {
-        private string _name;
-        private double _price;
-        
-        public IngredientFactory(string name, double price)
-        {
-            _name = name;
-            _price = price;
-        }
+    public class IngredientFactory : ItemFactory<Ingredient>
+    {
 
-        public override Product GetProduct()
+        protected override Ingredient CreateItem(string name)
         {
-            return new Ingredient(_name, _price);
+            switch (name)
+            {
+                case (nameof(Ham)):
+                    {
+                        return new Ham();
+                    }
+                case (nameof(Pineapple)):
+                    {
+                        return new Pineapple();
+                    }
+                case (nameof(Mushrooms)):
+                    {
+                        return new Mushrooms();
+                    }
+                case (nameof(Onion)):
+                    {
+                        return new Onion();
+                    }
+                case (nameof(KebabSauce)):
+                    {
+                        return new KebabSauce();
+                    }
+                case (nameof(Shrimps)):
+                    {
+                        return new Shrimps();
+                    }
+                case (nameof(Mussels)):
+                    {
+                        return new Mussels();
+                    }
+                case (nameof(Artichoke)):
+                    {
+                        return new Artichoke();
+                    }
+                case (nameof(Kebab)):
+                    {
+                        return new Kebab();
+                    }
+                case (nameof(Coriander)):
+                    {
+                        return new Coriander();
+                    }
+                default:
+                    {
+                        return null;
+                    }
+            }
         }
-     }
+    }
+
+    public class Ham : Ingredient
+    {
+        public Ham()
+        {
+            Id = new Guid();
+            Name = "Ham";
+            Price = 10;
+        }
+    }
+    public class Pineapple : Ingredient
+    {
+        public Pineapple()
+        {
+            Id = new Guid();
+            Name = "Pineapple";
+            Price = 10;
+        }
+    }
+    public class Mushrooms : Ingredient
+    {
+        public Mushrooms()
+        {
+            Id = new Guid();
+            Name = "Mushrooms";
+            Price = 10;
+        }
+    }
+    public class Onion : Ingredient
+    {
+        public Onion()
+        {
+            Id = new Guid();
+            Name = "Onion";
+            Price = 10;
+        }
+    }
+    public class KebabSauce : Ingredient
+    {
+        public KebabSauce()
+        {
+            Id = new Guid();
+            Name = "Kebab sauce";
+            Price = 10;
+        }
+    }
+    public class Shrimps : Ingredient
+    {
+        public Shrimps()
+        {
+            Id = new Guid();
+            Name = "Shrimps";
+            Price = 15;
+        }
+    }
+    public class Mussels : Ingredient
+    {
+        public Mussels()
+        {
+            Id = new Guid();
+            Name = "Mussels";
+            Price = 15;
+        }
+    }
+    public class Artichoke : Ingredient
+    {
+        public Artichoke()
+        {
+            Id = new Guid();
+            Name = "Artichoke";
+            Price = 15;
+        }
+    }
+    public class Kebab : Ingredient
+    {
+        public Kebab()
+        {
+            Id = new Guid();
+            Name = "Kebab";
+            Price = 20;
+        }
+    }
+    public class Coriander : Ingredient
+    {
+        public Coriander()
+        {
+            Id = new Guid();
+            Name = "Coriander";
+            Price = 20;
+        }
+    }
 }

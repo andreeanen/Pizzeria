@@ -7,21 +7,102 @@ using System.Threading.Tasks;
 namespace Pizzeria_API.Data.Factory
 {
      class PizzaFactory : ProductFactory
-    {
-        private string _name;
-        private double _price;
-        private List<ProductFactory> _ingredients;
-
-        public PizzaFactory(string name, double price, List<ProductFactory> ingredients)
+     {
+       
+        protected override Product CreateProduct(string name)
         {
-            _name = name;
-            _price = price;
-            _ingredients = ingredients;
+			switch (name)
+			{
+				case (nameof(Margherita)):
+					{
+                        return new Margherita();
+					}
+				case (nameof(Hawaii)):
+					{
+                        return new Hawaii();
+					}
+                case (nameof(Kebabpizza)):
+                    {
+                        return new Kebabpizza();
+                    }
+                case (nameof(QuatroStagioni)):
+                    {
+                        return new QuatroStagioni();
+                    }
+                default:
+                    {
+						return null;
+                    }
+			}
+		}
+     }
+
+    public class Margherita : Product
+    {        
+        public Margherita()
+        {
+            Id = new Guid();
+            Name = "Margherita";
+            Price = 85;
+            Ingredients = new List<Ingredient>() 
+            { 
+                new Ingredient{Id= new Guid(),Name ="cheese", Price=0},
+                new Ingredient{Id= new Guid(),Name ="tomato sauce", Price=0}
+            };
         }
-
-        public override Product GetProduct()
+    }
+    public class Hawaii : Product
+    {
+        public Hawaii()
         {
-            return new Pizza(_name, _price, _ingredients);
+            Id = new Guid();
+            Name = "Hawaii";
+            Price = 95;
+            Ingredients = new List<Ingredient>()
+            {
+                new Ingredient{Id= new Guid(),Name ="cheese"},
+                new Ingredient{Id= new Guid(),Name ="tomato sauce"},
+                new Ingredient{Id= new Guid(),Name ="ham"},
+                new Ingredient{Id= new Guid(),Name ="pineapple"}
+            };
+        }
+    }
+    public class Kebabpizza : Product
+    {
+        public Kebabpizza()
+        {
+            Id = new Guid();
+            Name = "Kebabpizza";
+            Price = 105;
+            Ingredients = new List<Ingredient>()
+            {
+                new Ingredient{Id= new Guid(),Name ="cheese"},
+                new Ingredient{Id= new Guid(),Name ="tomato sauce"},
+                new Ingredient{Id= new Guid(),Name ="kebab"},
+                new Ingredient{Id= new Guid(),Name ="mushrooms"},
+                new Ingredient{Id= new Guid(),Name ="onion"},
+                new Ingredient{Id= new Guid(),Name ="iceberg salad"},
+                new Ingredient{Id= new Guid(),Name ="tomato kebab sauce"}
+            };
+        }
+    }
+    public class QuatroStagioni : Product
+    {
+        public QuatroStagioni()
+        {
+            Id = new Guid();
+            Name = "Quatro Stagioni";
+            Price = 115;
+            Ingredients = new List<Ingredient>()
+            {
+                new Ingredient{Id= new Guid(),Name ="cheese"},
+                new Ingredient{Id= new Guid(),Name ="tomato sauce"},
+                new Ingredient{Id= new Guid(),Name ="ham"},
+                new Ingredient{Id= new Guid(),Name ="shrimps"},
+                new Ingredient{Id= new Guid(),Name ="mussels"},
+                new Ingredient{Id= new Guid(),Name ="mushrooms"},
+                new Ingredient{Id= new Guid(),Name ="artichoke"}
+            };
         }
     }
 }
