@@ -10,14 +10,11 @@ namespace Pizzeria_API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private Database _database;
-
         public Menu Menu { get; set; }
 
         public ProductController()
         {
-            _database = new Database();
-            Menu = _database.InitializeMenu();
+            Menu = Menu.GetMenu();
         }
 
         //// GET: api/<ProductController>
