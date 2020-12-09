@@ -1,19 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pizzeria_API.Controllers;
-using Pizzeria_API.Data;
 using Pizzeria_API.Models;
 
 namespace PizzeriaTests
 {
     [TestClass]
-    public class PizzeriaTests
+    public class MenuControllerTests
     {
         [TestMethod]
         public void Get_MenuIsNull_ReturnsNotFoundResult()
         {
             Menu menu = null;
-            var controller = new ProductController();
+            var controller = new MenuController();
             controller.Menu = menu;
 
             var actual = controller.Get();
@@ -24,7 +23,7 @@ namespace PizzeriaTests
         [TestMethod]
         public void Get_MenuHasProducts_ReturnsOk()
         {
-            var controller = new ProductController();
+            var controller = new MenuController();
 
             var actual = controller.Get();
 

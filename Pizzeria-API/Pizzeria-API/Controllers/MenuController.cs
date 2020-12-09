@@ -1,23 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Pizzeria_API.Data;
 using Pizzeria_API.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Pizzeria_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class MenuController : ControllerBase
     {
         public Menu Menu { get; set; }
 
-        public ProductController()
+        public MenuController()
         {
             Menu = Menu.GetMenu();
         }
 
-        //// GET: api/<ProductController>
+        //// GET: api/menu
         [HttpGet]
         public IActionResult Get()
         {

@@ -1,4 +1,5 @@
-﻿using Pizzeria_API.Data.Factory;
+﻿using Pizzeria_API.Data;
+using Pizzeria_API.Data.Factory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,25 @@ namespace Pizzeria_API.Models
 
     public class Order
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public Status Status { get; set; }
         public List<Product> Pizzas { get; set; }
         public List<Soda> Sodas { get; set; }
         public List<Ingredient> Ingredients { get; set; }
+
+        public Order()
+        {
+            Id = GetId();
+            Pizzas = new List<Product>();
+            Sodas = new List<Soda>();
+            Ingredients = new List<Ingredient>();
+        }
+
+        private int GetId()
+        {
+            var orders = Orders.GetOrders();
+            return orders.Queue.Count + 1;
+        }
 
         public double GetTotalSum()
         {
