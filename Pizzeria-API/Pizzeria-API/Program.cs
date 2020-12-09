@@ -4,6 +4,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Pizzeria_API.Controllers;
 using Pizzeria_API.Data;
+using Pizzeria_API.Data.Factory;
+using Pizzeria_API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +17,7 @@ namespace Pizzeria_API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-            //Database database = new Database();
-            //database.Initialize();
-            //ProductController productController = new ProductController(database);
-            
+            CreateHostBuilder(args).Build().Run();            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
