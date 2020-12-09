@@ -12,7 +12,7 @@ namespace PizzeriaTests
     {
         [TestMethod]
         public void Get_OrdersIsNull_ReturnsNotFoundResult()
-        {            
+        {
             var controller = new OrdersController();
             Orders orders = null;
             controller.Orders = orders;
@@ -40,9 +40,45 @@ namespace PizzeriaTests
 
             var expectedOrders = orders.Queue;
             var okResult = controller.Get() as OkObjectResult;
-            var actualOrders = okResult.Value as Queue<Order>;
+            var actualOrders = okResult.Value as List<Order>;
 
             CollectionAssert.AreEquivalent(expectedOrders, actualOrders);
         }
+
+        [TestMethod]
+        public void GetById_IdDoesntExist_Returns200()
+        {
+            var controller = new OrdersController();
+
+            var objectResult = controller.Get(1) as OkObjectResult;
+            var actualStatusCode = objectResult.StatusCode;
+
+            Assert.AreEqual(200, actualStatusCode);
+        }
+
+        [TestMethod]
+        public void GetById_IdDoesntExist_Returns404()
+        {
+            var controller = new OrdersController();
+
+            var objectResult = controller.Get(0) as NotFoundResult;
+            var actualStatusCode = objectResult.StatusCode;
+
+            Assert.AreEqual(404, actualStatusCode);
+        }
+
+        [TestMethod]
+        public void GetById_WhenCalled_ReturnsOrderWithSameId()
+        {
+            var controller = new OrdersController();
+
+            var expectedOrder = new Order() { Id = 1 };
+            var okResult = controller.Get(1) as OkObjectResult;
+            var actualOrder = okResult.Value as Order;
+
+            Assert.AreEqual(expectedOrder.Id, actualOrder.Id);
+        }
+
+        // test if expectedorder is correct class
     }
 }

@@ -7,11 +7,11 @@ namespace Pizzeria_API.Data
     {
         private static Orders _instance;
 
-        public Queue<Order> Queue { get; set; }
+        public List<Order> Queue { get; set; }
 
         private Orders() 
         {
-            Queue = new Queue<Order>();
+            Queue = new List<Order>();
         }
 
         public static Orders GetOrders()
@@ -19,10 +19,11 @@ namespace Pizzeria_API.Data
             if (_instance is null)
             {
                 _instance = new Orders();
-                // dummy
-                _instance.Queue.Enqueue(new Order());
-                _instance.Queue.Enqueue(new Order());
-                _instance.Queue.Enqueue(new Order());
+                _instance.Queue.Add(new Order());
+                _instance.Queue.Add(new Order());
+                _instance.Queue.Add(new Order());
+                _instance.Queue.Add(new Order());
+                _instance.Queue.Add(new Order());
             }
 
             return _instance;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pizzeria_API.Models
 {
-    public enum Status {Submitted, Delivered, Cancelled};
+    public enum Status { InProgress, Submitted, Delivered, Cancelled};
 
     public class Order
     {
