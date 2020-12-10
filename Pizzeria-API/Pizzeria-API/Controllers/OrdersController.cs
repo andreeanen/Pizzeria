@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pizzeria_API.Data;
 using Pizzeria_API.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -51,13 +52,6 @@ namespace Pizzeria_API.Controllers
             return CreateOrUpdateOrder(productName);
         }
 
-        //// PUT api/orders/5
-        //[HttpPut("{id}")]
-        //public IActionResult AddProductToOrder(int id, [FromBody] string productName)
-        //{
-        //    return CreateOrUpdateOrder(productName, id);
-        //}
-
         // PUT api/orders/5&action=add
         [HttpPut("{id}")]
         public IActionResult UpdateOrderProducts(int id, [FromQuery] string action, [FromBody] string productName)
@@ -91,6 +85,32 @@ namespace Pizzeria_API.Controllers
                 return Ok(order);
             }
             return BadRequest("It is not possible to change the status of your order to submitted.");
+        }
+
+        // PUT api/orders/5
+        [HttpPut("{id}/status={status}")]
+        public IActionResult ChangeOrderStatus(int id, string status)
+        {
+            var order = GetOrderBy(id);
+            if (order is null)
+            {
+                return NotFound();
+            }
+
+            if (order.Status == Status.Submitted)
+            {
+                // var newStatus = (Status)Enum.Parse(typeof(Status), status);
+                if (Enum.TryParse(status, true, out Status newStatus))
+                {
+                    order.Status = newStatus;
+                    return Ok(order);
+                }
+                else
+                {
+                    return BadRequest($"Invalid status parameter: {status}");
+                }
+            }
+            return BadRequest($"It's not possible to change status of a {order.Status} order to {status}.");
         }
 
         private Order GetOrderBy(int? id)
@@ -175,12 +195,6 @@ namespace Pizzeria_API.Controllers
             }
 
             return Ok(order);
-        }
-
-        private double CalculateTotalSum(Order order)
-        {
-            var calculator = new OrderSumCalculator();
-            return calculator.CalculateOrderSum(order);
         }
     }
 }

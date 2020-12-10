@@ -116,26 +116,26 @@ namespace PizzeriaTests
             };
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(GetProductNames), DynamicDataSourceType.Method)]
-        public void AddProductToOrder_ProductNames_ReturnsObjectResult(string productName, ObjectResult expectedObjectResult)
-        {
-            var controller = new OrdersController();
+        //[DataTestMethod]
+        //[DynamicData(nameof(GetProductNames), DynamicDataSourceType.Method)]
+        //public void AddProductToOrder_ProductNames_ReturnsObjectResult(string productName, ObjectResult expectedObjectResult)
+        //{
+        //    var controller = new OrdersController();
 
-            var actual = controller.AddProductToOrder(1, productName);
-            var expectedResult = expectedObjectResult.GetType();
+        //    var actual = controller.AddProductToOrder(1, productName);
+        //    var expectedResult = expectedObjectResult.GetType();
 
-            Assert.IsInstanceOfType(actual, expectedResult);
-        }
+        //    Assert.IsInstanceOfType(actual, expectedResult);
+        //}
 
-        [TestMethod]
-        public void AddProductToOrder_IdDoesNotExist_ReturnsNotFound()
-        {
-            var controller = new OrdersController();
+        //[TestMethod]
+        //public void AddProductToOrder_IdDoesNotExist_ReturnsNotFound()
+        //{
+        //    var controller = new OrdersController();
 
-            var actualActionResult = controller.AddProductToOrder(0, "Margherita");
+        //    var actualActionResult = controller.AddProductToOrder(0, "Margherita");
 
-            Assert.IsInstanceOfType(actualActionResult, typeof(NotFoundResult));
-        }
+        //    Assert.IsInstanceOfType(actualActionResult, typeof(NotFoundResult));
+        //}
     }
 }
