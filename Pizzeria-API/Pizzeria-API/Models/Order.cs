@@ -31,14 +31,14 @@ namespace Pizzeria_API.Models
             return orders.Queue.Count + 1;
         }
 
-        public double GetTotalSum()
-        {
-            double pizzasSum = Pizzas.Select(p => p.Price).Sum();
-            double sodasSum = Sodas.Select(s => s.Price).Sum();
-            double ingredientsSum = Ingredients.Select(i => i.Price).Sum();
+        //public double GetTotalSum()
+        //{
+        //    double pizzasSum = Pizzas.Select(p => p.Price).Sum();
+        //    double sodasSum = Sodas.Select(s => s.Price).Sum();
+        //    double ingredientsSum = Ingredients.Select(i => i.Price).Sum();
 
-            return pizzasSum + sodasSum + ingredientsSum;
-        }
+        //    return pizzasSum + sodasSum + ingredientsSum;
+        //}
     }
 }
 
