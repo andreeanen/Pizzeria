@@ -16,6 +16,7 @@ namespace Pizzeria_API.Models
         public List<Product> Pizzas { get; set; }
         public List<Soda> Sodas { get; set; }
         public List<Ingredient> Ingredients { get; set; }
+        public double Total { get; set; }
 
         public Order()
         {
@@ -30,15 +31,5 @@ namespace Pizzeria_API.Models
             var orders = Orders.GetOrders();
             return orders.Queue.Count + 1;
         }
-
-        //public double GetTotalSum()
-        //{
-        //    double pizzasSum = Pizzas.Select(p => p.Price).Sum();
-        //    double sodasSum = Sodas.Select(s => s.Price).Sum();
-        //    double ingredientsSum = Ingredients.Select(i => i.Price).Sum();
-
-        //    return pizzasSum + sodasSum + ingredientsSum;
-        //}
     }
 }
-

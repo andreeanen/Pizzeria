@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pizzeria_API.Data;
-using Pizzeria_API.Data.Factory;
 using Pizzeria_API.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +23,7 @@ namespace Pizzeria_API.Controllers
 
         // GET: api/orders
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetOrders()
         {
             if (Orders == null)
             {
@@ -35,9 +34,9 @@ namespace Pizzeria_API.Controllers
 
         // GET api/orders/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetOrder(int id)
         {
-            var order = Orders.Queue.Find(o => o.Id == id);
+            var order = GetOrderBy(id);
             if (order == null)
             {
                 return NotFound();
@@ -47,9 +46,67 @@ namespace Pizzeria_API.Controllers
 
         // POST api/orders
         [HttpPost]
-        public IActionResult Post([FromBody]string productName)
+        public IActionResult CreateOrder([FromBody] string productName)
         {
-            var order = new Order(); //{ Pizzas= new List<Product>(){ new Margherita()} };
+            return CreateOrUpdateOrder(productName);
+        }
+
+        //// PUT api/orders/5
+        //[HttpPut("{id}")]
+        //public IActionResult AddProductToOrder(int id, [FromBody] string productName)
+        //{
+        //    return CreateOrUpdateOrder(productName, id);
+        //}
+
+        // PUT api/orders/5&action=add
+        [HttpPut("{id}")]
+        public IActionResult UpdateOrderProducts(int id, [FromQuery] string action, [FromBody] string productName)
+        {
+            switch (action)
+            {
+                case "add":
+                    return CreateOrUpdateOrder(productName, id);
+                case "delete":
+                    return DeleteProductFromOrder(productName, id);
+                default:
+                    return BadRequest();
+            }
+        }
+
+        // PUT api/orders/5/submit
+        [HttpPut("{id}/submit")]
+        public IActionResult Submit(int id)
+        {
+            var order = GetOrderBy(id);
+            if (order is null)
+            {
+                return NotFound();
+            }
+
+            if (order.Status == Status.InProgress)
+            {
+                order.Status = Status.Submitted;
+                var calculator = new OrderSumCalculator();
+                order.Total = calculator.CalculateOrderSum(order);
+                return Ok(order);
+            }
+            return BadRequest("It is not possible to change the status of your order to submitted.");
+        }
+
+        private Order GetOrderBy(int? id)
+        {
+            return Orders.Queue.Find(o => o.Id == id);
+        }
+
+        private IActionResult CreateOrUpdateOrder(string productName, int? id = null)
+        {
+            var order = id is null ? new Order() : GetOrderBy(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            //var order =  new Order(); //{ Pizzas= new List<Product>(){ new Margherita()} };
             var pizza = Menu.Pizzas.Where(p => p.Name.ToLower() == productName.ToLower()).FirstOrDefault();
             var soda = Menu.Sodas.Where(s => s.Name.ToLower() == productName.ToLower()).FirstOrDefault();
             var ingredient = Menu.Ingredients.Where(i => i.Name.ToLower() == productName.ToLower()).FirstOrDefault();
@@ -60,7 +117,7 @@ namespace Pizzeria_API.Controllers
             }
             else
             {
-                if (pizza!=null)
+                if (pizza != null)
                 {
                     order.Pizzas.Add(pizza);
                 }
@@ -68,30 +125,62 @@ namespace Pizzeria_API.Controllers
                 {
                     order.Sodas.Add(soda);
                 }
-               
-                if(ingredient != null && order.Pizzas.Count==0)
+                if (ingredient != null)
                 {
-                    return BadRequest("You can not add the ingredient because you do not have a pizza on your order");
-                }
-                else
-                {
+                    if (order.Pizzas.Count == 0)
+                    {
+                        return BadRequest("You can not add the ingredient because you do not have a pizza on your order");
+                    }
                     order.Ingredients.Add(ingredient);
                 }
+
+                Orders.Queue.Add(order);
                 return Ok(order);
             }
-                        
         }
 
-        //// POST api/orders
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        // PUT api/orders/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        private IActionResult DeleteProductFromOrder(string productName, int? id = null)
         {
+            var order = GetOrderBy(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            var pizzaToRemove = order.Pizzas.FirstOrDefault(p => p.Name.ToLower() == productName.ToLower());
+            if (pizzaToRemove != null)
+            {
+                order.Pizzas.Remove(pizzaToRemove);
+                if (order.Pizzas.Count == 0)
+                {
+                    order.Ingredients.Clear();
+                }
+            }
+
+            var sodaToRemove = order.Sodas.FirstOrDefault(s => s.Name.ToLower() == productName.ToLower());
+            if (sodaToRemove != null)
+            {
+                order.Sodas.Remove(sodaToRemove);
+            }
+
+            var ingredientToToRemove = order.Ingredients.FirstOrDefault(i => i.Name.ToLower() == productName.ToLower());
+            if (ingredientToToRemove != null)
+            {
+                order.Ingredients.Remove(ingredientToToRemove);
+            }
+
+            if (pizzaToRemove is null && sodaToRemove is null && ingredientToToRemove is null)
+            {
+                return BadRequest("The product cannot be found on your order");
+            }
+
+            return Ok(order);
+        }
+
+        private double CalculateTotalSum(Order order)
+        {
+            var calculator = new OrderSumCalculator();
+            return calculator.CalculateOrderSum(order);
         }
     }
 }
