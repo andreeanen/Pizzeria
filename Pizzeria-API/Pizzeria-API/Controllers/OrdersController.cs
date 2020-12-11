@@ -133,6 +133,10 @@ namespace Pizzeria_API.Controllers
             {
                 return NotFound();
             }
+            if (order.Status != Status.InProgress)
+            {
+                return BadRequest($"It is not possible to change a {order.Status.ToString().ToLower()} order.");
+            }
 
             var pizza = Menu.Pizzas.Where(p => p.Name.ToLower() == productName.ToLower()).FirstOrDefault();
             var soda = Menu.Sodas.Where(s => s.Name.ToLower() == productName.ToLower()).FirstOrDefault();
