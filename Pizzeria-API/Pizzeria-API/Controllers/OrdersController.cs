@@ -83,6 +83,10 @@ namespace Pizzeria_API.Controllers
                 return NotFound();
             }
 
+            if (IsOrderEmpty(order))
+            {
+                return BadRequest("It is not posible to submit an empty order.");
+            }
             if (order.Status == Status.InProgress)
             {
                 order.Status = Status.Submitted;
@@ -90,7 +94,7 @@ namespace Pizzeria_API.Controllers
                 order.Total = calculator.CalculateOrderSum(order);
                 return Ok(order);
             }
-            return BadRequest("It is not possible to change the status of your order to submitted.");
+            return BadRequest($"It is not possible to change the status of a {order.Status.ToString().ToLower()} order to submitted.");
         }
 
         [HttpPut("{id}/status={status}")]
@@ -205,5 +209,11 @@ namespace Pizzeria_API.Controllers
             return Ok(order);
         }
 
+        private bool IsOrderEmpty(Order order)
+        {
+            return order.Pizzas.Count == 0 &&
+                   order.Sodas.Count == 0 &&
+                   order.Ingredients.Count == 0;
+        }
     }
 }
