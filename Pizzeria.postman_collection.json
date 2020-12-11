@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "b6636f5d-77a3-4dbc-8096-fd3ec37e67a5",
+		"name": "Pizzeria",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Menu",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/menu",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"menu"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "GetOrders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/orders",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrder - by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrdersByStatus - inprogress",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/status=inprogress",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"status=inprogress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrdersByStatus - submitted",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/status=submitted",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"status=submitted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrdersByStatus - delivered",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/status=delivered",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"status=delivered"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrdersByStatus - cancelled",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/status=cancelled",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"status=cancelled"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateOrder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\"Margherita\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/orders",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOrder - add product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\"Fanta\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/orders/1?action=add",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "add"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOrder - remove product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\"Shrimps\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/orders/1?action=remove",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "remove"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SubmitOrder",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/1/submit",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1",
+								"submit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangeOrderStatus - delivered",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/1/status=delivered",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1",
+								"status=delivered"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangeOrderStatus - cancelled",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/1/status=cancelled",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1",
+								"status=cancelled"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8dd73fa7-6ca4-4522-82b0-ff199287da6c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5c3b8131-f43c-4775-b39a-b2d5567c556d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "6f7e43a3-f0b0-4385-89af-1f3b0bd0d38e",
+			"key": "baseurl",
+			"value": "https://localhost:44366"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
