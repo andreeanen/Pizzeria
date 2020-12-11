@@ -93,29 +93,7 @@ namespace PizzeriaTests
             Assert.IsInstanceOfType(actual, expectedResult);
         }
 
-        public static IEnumerable<object[]> GetProductNames()
-        {
-            yield return new object[]
-            {
-                "Shrimps",
-                new BadRequestObjectResult("You can not add the ingredient because you do not have a pizza on your order")
-            };
-            yield return new object[]
-            {
-                "Fanta",
-                new OkObjectResult(new Order() { Pizzas = new List<Product>() { new Margherita() }})
-            };
-            yield return new object[] 
-            { 
-                "Margherita", 
-                new OkObjectResult(new Order() { Pizzas = new List<Product>() { new Margherita() }}) 
-            };
-            yield return new object[] 
-            { 
-                "Non Existing Product", 
-                new BadRequestObjectResult("The product you are trying to order is not on the menu") 
-            };
-        }
+       
 
         [DataTestMethod]
         [DynamicData(nameof(GetStatuses), DynamicDataSourceType.Method)]
@@ -158,27 +136,52 @@ namespace PizzeriaTests
             };
         }
 
-        //[DataTestMethod]
-        //[DynamicData(nameof(GetProductNames), DynamicDataSourceType.Method)]
-        //public void AddProductToOrder_ProductNames_ReturnsObjectResult(string productName, ObjectResult expectedObjectResult)
-        //{
-        //    var controller = new OrdersController();
 
-        //    var actual = controller.AddProductToOrder(1, productName);
-        //    var expectedResult = expectedObjectResult.GetType();
 
-        //    Assert.IsInstanceOfType(actual, expectedResult);
-        //}
+        public static IEnumerable<object[]> GetProductNames()
+        {
+            yield return new object[]
+            {
+                "Shrimps",
+                new BadRequestObjectResult("You can not add the ingredient because you do not have a pizza on your order")
+            };
+            yield return new object[]
+            {
+                "Fanta",
+                new OkObjectResult(new Order() { Pizzas = new List<Product>() { new Margherita() }})
+            };
+            yield return new object[]
+            {
+                "Margherita",
+                new OkObjectResult(new Order() { Pizzas = new List<Product>() { new Margherita() }})
+            };
+            yield return new object[]
+            {
+                "Non Existing Product",
+                new BadRequestObjectResult("The product you are trying to order is not on the menu")
+            };
+        }
+        [DataTestMethod]
+        [DynamicData(nameof(GetProductNames), DynamicDataSourceType.Method)]
+        public void AddProductToOrder_ProductNames_ReturnsObjectResult(string productName, ObjectResult expectedObjectResult)
+        {
+            var controller = new OrdersController();
 
-        //[TestMethod]
-        //public void AddProductToOrder_IdDoesNotExist_ReturnsNotFound()
-        //{
-        //    var controller = new OrdersController();
+            var actual = controller.CreateOrUpdateOrder(productName);
+            var expectedResult = expectedObjectResult.GetType();
 
-        //    var actualActionResult = controller.AddProductToOrder(0, "Margherita");
+            Assert.IsInstanceOfType(actual, expectedResult);
+        }
 
-        //    Assert.IsInstanceOfType(actualActionResult, typeof(NotFoundResult));
-        //}
+        [TestMethod]
+        public void AddProductToOrder_ItDoesNotExist_ReturnsNotFound()
+        {
+            var controller = new OrdersController();
+            var orderIdDoesNotExist = 0;
+            var actualActionResult = controller.CreateOrUpdateOrder("Margherita", orderIdDoesNotExist);
+
+            Assert.IsInstanceOfType(actualActionResult, typeof(NotFoundResult));
+        }
 
 
         public static IEnumerable<object[]> GetProductNamesAndOrderId()
