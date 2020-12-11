@@ -12,6 +12,7 @@ namespace PizzeriaTests
     public class OrdersControllerTests
     {
         public Orders Orders { get; set; }
+
         [TestMethod]
         public void GetOrders_OrdersIsNull_ReturnsNotFoundResult()
         {
@@ -93,8 +94,6 @@ namespace PizzeriaTests
             Assert.IsInstanceOfType(actual, expectedResult);
         }
 
-       
-
         [DataTestMethod]
         [DynamicData(nameof(GetStatuses), DynamicDataSourceType.Method)]
         public void GetOrdersByStatus_WhenCalled_ReturnsObjectResult(string status, ObjectResult expectedObjectResult)
@@ -123,7 +122,7 @@ namespace PizzeriaTests
             {
                 "delivered",
                 new OkObjectResult(new { count = 1, orders = new List<Order>() })
-            }; 
+            };
             yield return new object[]
             {
                 "cancelled",
@@ -135,8 +134,6 @@ namespace PizzeriaTests
                 new BadRequestObjectResult("Invalid status: invalid-status")
             };
         }
-
-
 
         public static IEnumerable<object[]> GetProductNames()
         {
@@ -157,6 +154,11 @@ namespace PizzeriaTests
             };
             yield return new object[]
             {
+                "Shrimps",
+                new BadRequestObjectResult("You can not add the ingredient because you do not have a pizza on your order")
+            };
+            yield return new object[]
+            {
                 "Non Existing Product",
                 new BadRequestObjectResult("The product you are trying to order is not on the menu")
             };
@@ -174,7 +176,7 @@ namespace PizzeriaTests
         }
 
         [TestMethod]
-        public void AddProductToOrder_ItDoesNotExist_ReturnsNotFound()
+        public void AddProductToOrder_IdDoesNotExist_ReturnsNotFound()
         {
             var controller = new OrdersController();
             var orderIdDoesNotExist = 0;
@@ -189,7 +191,7 @@ namespace PizzeriaTests
             yield return new object[]
             {
                 "Shrimps",
-                new OkObjectResult(new Order() 
+                new OkObjectResult(new Order()
                 {
                     Pizzas= new List<Product>() { new Margherita()},
                     Sodas = new List<Soda>() { new Fanta() }
@@ -198,7 +200,7 @@ namespace PizzeriaTests
             yield return new object[]
             {
                 "Fanta",
-                new OkObjectResult(new Order() 
+                new OkObjectResult(new Order()
                 {
                     Pizzas= new List<Product>() {new Margherita()},
                     Ingredients = new List<Ingredient>() {new Shrimps()}
@@ -207,7 +209,7 @@ namespace PizzeriaTests
             yield return new object[]
             {
                 "Margherita",
-                 new OkObjectResult(new Order() 
+                 new OkObjectResult(new Order()
                  {
                     Sodas = new List<Soda>() { new Fanta() }
                  })
@@ -219,7 +221,7 @@ namespace PizzeriaTests
             };
         }
 
-        
+
         [DataTestMethod]
         [DynamicData(nameof(GetProductNamesAndOrderId), DynamicDataSourceType.Method)]
         public void DeleteProductFromOrder_StatusInProgress_ReturnObjectResult(string productName, ObjectResult expectedObjectResult)
@@ -290,11 +292,11 @@ namespace PizzeriaTests
                 },
                 new BadRequestObjectResult("Your order is not in progress so you can not delete products from it.")
             };
-                    }
+        }
 
         [DataTestMethod]
         [DynamicData(nameof(GetOrdersDifferentStatus), DynamicDataSourceType.Method)]
-        public void DeleteProductFromOrder_DifferentStatus_ReturnObjectResult(string productName, Order order,ObjectResult expectedObjectResult)
+        public void DeleteProductFromOrder_DifferentStatus_ReturnObjectResult(string productName, Order order, ObjectResult expectedObjectResult)
         {
             Orders = Orders.GetOrders();
             Orders.Queue.Add(order);
@@ -303,6 +305,121 @@ namespace PizzeriaTests
             var actual = controller.DeleteProductFromOrder(productName, order.Id);
 
             Assert.IsInstanceOfType(actual, expectedObjectResult.GetType());
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(GetUpdateActions), DynamicDataSourceType.Method)]
+        public void UpdateOrder_WhenCalled_ReturnsObjectResult(string action, IActionResult expectedObjectResult)
+        {
+            var controller = new OrdersController();
+
+            var actualResult = controller.UpdateOrder(1, action, "product name");
+            var expectedResult = expectedObjectResult.GetType();
+
+            Assert.IsInstanceOfType(actualResult, expectedResult);
+        }
+
+        public static IEnumerable<object[]> GetUpdateActions()
+        {
+            yield return new object[]
+            {
+                "add",
+                new ObjectResult(new object())
+            };
+            yield return new object[]
+            {
+                "delete",
+                new ObjectResult(new object())
+            };
+            yield return new object[]
+            {
+                "invalid action",
+                new BadRequestResult()
+            };
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(GetOrders), DynamicDataSourceType.Method)]
+        public void SubmitOrder_WhenCalled_ReturnsObjectResult(Order order, IActionResult expectedObjectResult)
+        {
+            var controller = new OrdersController();
+            var orders = Orders.GetOrders();
+            orders.Queue.Clear();
+            orders.Queue.Add(order);
+            controller.Orders = orders;
+
+            var actual = controller.SubmitOrder(1);
+            var expected = expectedObjectResult.GetType();
+
+            Assert.IsInstanceOfType(actual, expected);
+        }
+
+        public static IEnumerable<object[]> GetOrders()
+        {
+            yield return new object[]
+            {
+                new Order() { Id = 0 },
+                new NotFoundResult()
+            };
+            yield return new object[]
+            {
+                new Order() { Id = 1 },
+                new BadRequestObjectResult("")
+            };
+            yield return new object[]
+            {
+                new Order() { Id = 1, Pizzas = new List<Product>() { new Margherita() } },
+                new OkObjectResult("")
+            };
+            yield return new object[]
+            {
+                new Order() { Id = 1, Status = Status.Delivered, Pizzas = new List<Product>() { new Margherita() } },
+                new BadRequestObjectResult("")
+            };            
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(GetOrdersForStatusChange), DynamicDataSourceType.Method)]
+        public void ChangeOrderStatus_WhenCalled_ReturnsObjectResult(Order order, string status, IActionResult expectedObjectResult)
+        {
+            var controller = new OrdersController();
+            var orders = Orders.GetOrders();
+            orders.Queue.Clear();
+            orders.Queue.Add(order);
+            controller.Orders = orders;
+
+            var actual = controller.ChangeOrderStatus(1, status);
+            var expected = expectedObjectResult.GetType();
+
+            Assert.IsInstanceOfType(actual, expected);
+        }
+
+        public static IEnumerable<object[]> GetOrdersForStatusChange()
+        {
+            yield return new object[]
+            {
+                new Order() { Id = 0 },
+                "delivered",
+                new NotFoundResult()
+            };
+            yield return new object[]
+            {
+                new Order() { Id = 1, Status = Status.Submitted },
+                "cancelled",
+                new OkObjectResult("")
+            };
+            yield return new object[]
+            {
+                new Order() { Id = 1, Status = Status.InProgress },
+                "delivered",
+                new BadRequestObjectResult("")
+            };
+            yield return new object[]
+            {
+                new Order() { Id = 1, Status = Status.Submitted },
+                "invalid status",
+                new BadRequestObjectResult("")
+            };
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Pizzeria_API.Controllers
             {
                 case "add":
                     return CreateOrUpdateOrder(productName, id);
-                case "remove":
+                case "delete":
                     return DeleteProductFromOrder(productName, id);
                 default:
                     return BadRequest();
@@ -175,7 +175,7 @@ namespace Pizzeria_API.Controllers
             var order = GetOrderBy(id);
             if (order == null)
             {
-                return NotFound();
+                return NotFound("No order found");
             }
 
             if(order.Status!= Status.InProgress)
