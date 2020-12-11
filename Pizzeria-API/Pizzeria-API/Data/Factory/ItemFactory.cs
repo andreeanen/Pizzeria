@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Pizzeria_API.Data.Factory
+﻿namespace Pizzeria_API.Data.Factory
 {
     public abstract class ItemFactory<T>
     {

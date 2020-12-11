@@ -1,5 +1,4 @@
-﻿using Pizzeria_API.Data.Factory;
-using Pizzeria_API.Models;
+﻿using Pizzeria_API.Models;
 using System.Collections.Generic;
 
 namespace Pizzeria_API.Data

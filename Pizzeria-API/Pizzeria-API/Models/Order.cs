@@ -1,9 +1,5 @@
 ﻿using Pizzeria_API.Data;
-using Pizzeria_API.Data.Factory;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pizzeria_API.Models
 {
