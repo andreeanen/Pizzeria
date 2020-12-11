@@ -117,6 +117,47 @@ namespace PizzeriaTests
             };
         }
 
+        [DataTestMethod]
+        [DynamicData(nameof(GetStatuses), DynamicDataSourceType.Method)]
+        public void GetOrdersByStatus_WhenCalled_ReturnsObjectResult(string status, ObjectResult expectedObjectResult)
+        {
+            var controller = new OrdersController();
+
+            var actualResult = controller.GetOrdersByStatus(status);
+            var expectedResult = expectedObjectResult.GetType();
+
+            Assert.IsInstanceOfType(actualResult, expectedResult);
+        }
+
+        public static IEnumerable<object[]> GetStatuses()
+        {
+            yield return new object[]
+            {
+                "inprogress",
+                new OkObjectResult(new { count = 1, orders = new List<Order>() })
+            };
+            yield return new object[]
+            {
+                "submitted",
+                new OkObjectResult(new { count = 1, orders = new List<Order>() })
+            };
+            yield return new object[]
+            {
+                "delivered",
+                new OkObjectResult(new { count = 1, orders = new List<Order>() })
+            }; 
+            yield return new object[]
+            {
+                "cancelled",
+                new OkObjectResult(new { count = 1, orders = new List<Order>() })
+            };
+            yield return new object[]
+            {
+                "invalid-status",
+                new BadRequestObjectResult("Invalid status: invalid-status")
+            };
+        }
+
         //[DataTestMethod]
         //[DynamicData(nameof(GetProductNames), DynamicDataSourceType.Method)]
         //public void AddProductToOrder_ProductNames_ReturnsObjectResult(string productName, ObjectResult expectedObjectResult)

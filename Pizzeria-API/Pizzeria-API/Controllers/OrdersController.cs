@@ -22,7 +22,6 @@ namespace Pizzeria_API.Controllers
             Menu = Menu.GetMenu();
         }
 
-        // GET: api/orders
         [HttpGet]
         public IActionResult GetOrders()
         {
@@ -33,7 +32,6 @@ namespace Pizzeria_API.Controllers
             return Ok(Orders.Queue);
         }
 
-        // GET api/orders/5
         [HttpGet("{id}")]
         public IActionResult GetOrder(int id)
         {
@@ -45,31 +43,39 @@ namespace Pizzeria_API.Controllers
             return Ok(order);
         }
 
-        // POST api/orders
+        [HttpGet("status={status}")]
+        public IActionResult GetOrdersByStatus(string status)
+        {
+            if (Enum.TryParse(status, true, out Status orderStatus))
+            {
+                var orders = Orders.Queue.Where(o => o.Status == orderStatus).ToList();
+                return Ok(new { count = orders.Count, orders });
+            }
+            return BadRequest($"Invalid status: {status}");
+        }
+
         [HttpPost]
         public IActionResult CreateOrder([FromBody] string productName)
         {
             return CreateOrUpdateOrder(productName);
         }
 
-        // PUT api/orders/5&action=add
         [HttpPut("{id}")]
-        public IActionResult UpdateOrderProducts(int id, [FromQuery] string action, [FromBody] string productName)
+        public IActionResult UpdateOrder(int id, [FromQuery] string action, [FromBody] string productName)
         {
             switch (action)
             {
                 case "add":
                     return CreateOrUpdateOrder(productName, id);
-                case "delete":
+                case "remove":
                     return DeleteProductFromOrder(productName, id);
                 default:
                     return BadRequest();
             }
         }
 
-        // PUT api/orders/5/submit
         [HttpPut("{id}/submit")]
-        public IActionResult Submit(int id)
+        public IActionResult SubmitOrder(int id)
         {
             var order = GetOrderBy(id);
             if (order is null)
@@ -87,7 +93,6 @@ namespace Pizzeria_API.Controllers
             return BadRequest("It is not possible to change the status of your order to submitted.");
         }
 
-        // PUT api/orders/5
         [HttpPut("{id}/status={status}")]
         public IActionResult ChangeOrderStatus(int id, string status)
         {
@@ -99,7 +104,6 @@ namespace Pizzeria_API.Controllers
 
             if (order.Status == Status.Submitted)
             {
-                // var newStatus = (Status)Enum.Parse(typeof(Status), status);
                 if (Enum.TryParse(status, true, out Status newStatus))
                 {
                     order.Status = newStatus;

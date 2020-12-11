@@ -20,7 +20,7 @@ namespace Pizzeria_API.Data
             if (_instance is null)
             {
                 _instance = new Orders();
-                _instance.Queue.Add(new Order(){});
+                
             }
 
             return _instance;
