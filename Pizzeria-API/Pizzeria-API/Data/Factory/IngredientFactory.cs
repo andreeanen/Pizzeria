@@ -65,7 +65,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Ham()
         {
-            Id = new Guid();
             Name = "Ham";
             Price = 10;
         }
@@ -74,7 +73,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Pineapple()
         {
-            Id = new Guid();
             Name = "Pineapple";
             Price = 10;
         }
@@ -83,7 +81,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Mushrooms()
         {
-            Id = new Guid();
             Name = "Mushrooms";
             Price = 10;
         }
@@ -92,7 +89,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Onion()
         {
-            Id = new Guid();
             Name = "Onion";
             Price = 10;
         }
@@ -101,7 +97,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public KebabSauce()
         {
-            Id = new Guid();
             Name = "Kebab sauce";
             Price = 10;
         }
@@ -110,7 +105,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Shrimps()
         {
-            Id = new Guid();
             Name = "Shrimps";
             Price = 15;
         }
@@ -119,7 +113,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Mussels()
         {
-            Id = new Guid();
             Name = "Mussels";
             Price = 15;
         }
@@ -128,7 +121,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Artichoke()
         {
-            Id = new Guid();
             Name = "Artichoke";
             Price = 15;
         }
@@ -137,7 +129,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Kebab()
         {
-            Id = new Guid();
             Name = "Kebab";
             Price = 20;
         }
@@ -146,7 +137,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Coriander()
         {
-            Id = new Guid();
             Name = "Coriander";
             Price = 20;
         }

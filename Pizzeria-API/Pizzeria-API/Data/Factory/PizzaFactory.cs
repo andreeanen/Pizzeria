@@ -41,13 +41,12 @@ namespace Pizzeria_API.Data.Factory
     {        
         public Margherita()
         {
-            Id = new Guid();
             Name = "Margherita";
             Price = 85;
             Ingredients = new List<Ingredient>() 
             { 
-                new Ingredient{Id= new Guid(),Name ="cheese", Price=0},
-                new Ingredient{Id= new Guid(),Name ="tomato sauce", Price=0}
+                new Ingredient{Name = "cheese", Price = 0},
+                new Ingredient{Name = "tomato sauce", Price = 0}
             };
         }
     }
@@ -55,15 +54,14 @@ namespace Pizzeria_API.Data.Factory
     {
         public Hawaii()
         {
-            Id = new Guid();
             Name = "Hawaii";
             Price = 95;
             Ingredients = new List<Ingredient>()
             {
-                new Ingredient{Id= new Guid(),Name ="cheese"},
-                new Ingredient{Id= new Guid(),Name ="tomato sauce"},
-                new Ingredient{Id= new Guid(),Name ="ham"},
-                new Ingredient{Id= new Guid(),Name ="pineapple"}
+                new Ingredient{Name = "cheese"},
+                new Ingredient{Name = "tomato sauce"},
+                new Ingredient{Name = "ham"},
+                new Ingredient{Name = "pineapple"}
             };
         }
     }
@@ -71,18 +69,17 @@ namespace Pizzeria_API.Data.Factory
     {
         public Kebabpizza()
         {
-            Id = new Guid();
             Name = "Kebabpizza";
             Price = 105;
             Ingredients = new List<Ingredient>()
             {
-                new Ingredient{Id= new Guid(),Name ="cheese"},
-                new Ingredient{Id= new Guid(),Name ="tomato sauce"},
-                new Ingredient{Id= new Guid(),Name ="kebab"},
-                new Ingredient{Id= new Guid(),Name ="mushrooms"},
-                new Ingredient{Id= new Guid(),Name ="onion"},
-                new Ingredient{Id= new Guid(),Name ="iceberg salad"},
-                new Ingredient{Id= new Guid(),Name ="tomato kebab sauce"}
+                new Ingredient{Name = "cheese"},
+                new Ingredient{Name = "tomato sauce"},
+                new Ingredient{Name = "kebab"},
+                new Ingredient{Name = "mushrooms"},
+                new Ingredient{Name = "onion"},
+                new Ingredient{Name = "iceberg salad"},
+                new Ingredient{Name = "tomato kebab sauce"}
             };
         }
     }
@@ -90,18 +87,17 @@ namespace Pizzeria_API.Data.Factory
     {
         public QuatroStagioni()
         {
-            Id = new Guid();
             Name = "Quatro Stagioni";
             Price = 115;
             Ingredients = new List<Ingredient>()
             {
-                new Ingredient{Id= new Guid(),Name ="cheese"},
-                new Ingredient{Id= new Guid(),Name ="tomato sauce"},
-                new Ingredient{Id= new Guid(),Name ="ham"},
-                new Ingredient{Id= new Guid(),Name ="shrimps"},
-                new Ingredient{Id= new Guid(),Name ="mussels"},
-                new Ingredient{Id= new Guid(),Name ="mushrooms"},
-                new Ingredient{Id= new Guid(),Name ="artichoke"}
+                new Ingredient{Name = "cheese"},
+                new Ingredient{Name = "tomato sauce"},
+                new Ingredient{Name = "ham"},
+                new Ingredient{Name = "shrimps"},
+                new Ingredient{Name = "mussels"},
+                new Ingredient{Name = "mushrooms"},
+                new Ingredient{Name = "artichoke"}
             };
         }
     }

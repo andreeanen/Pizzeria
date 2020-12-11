@@ -36,7 +36,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Fanta()
         {
-            Id = new Guid();
             Name = "Fanta";
             Price = 20;
         }
@@ -45,7 +44,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public CocaCola()
         {
-            Id = new Guid();
             Name = "Coca Cola";
             Price = 20;
         }
@@ -54,7 +52,6 @@ namespace Pizzeria_API.Data.Factory
     {
         public Sprite()
         {
-            Id = new Guid();
             Name = "Sprite";
             Price = 25;
         }
