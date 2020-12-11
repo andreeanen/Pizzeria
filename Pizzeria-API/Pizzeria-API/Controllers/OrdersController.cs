@@ -118,7 +118,7 @@ namespace Pizzeria_API.Controllers
             return Orders.Queue.Find(o => o.Id == id);
         }
 
-        private IActionResult CreateOrUpdateOrder(string productName, int? id = null)
+        public IActionResult CreateOrUpdateOrder(string productName, int? id = null)
         {
             var order = id is null ? new Order() : GetOrderBy(id);
             if (order == null)
@@ -158,12 +158,17 @@ namespace Pizzeria_API.Controllers
             }
         }
 
-        private IActionResult DeleteProductFromOrder(string productName, int? id = null)
+        public IActionResult DeleteProductFromOrder(string productName, int? id = null)
         {
             var order = GetOrderBy(id);
             if (order == null)
             {
                 return NotFound();
+            }
+
+            if(order.Status!= Status.InProgress)
+            {
+                return BadRequest("Your order is not in progress so you can not delete products from it.");
             }
 
             var pizzaToRemove = order.Pizzas.FirstOrDefault(p => p.Name.ToLower() == productName.ToLower());
@@ -195,5 +200,6 @@ namespace Pizzeria_API.Controllers
 
             return Ok(order);
         }
+
     }
 }

@@ -11,6 +11,7 @@ namespace PizzeriaTests
     [TestClass]
     public class OrdersControllerTests
     {
+        public Orders Orders { get; set; }
         [TestMethod]
         public void GetOrders_OrdersIsNull_ReturnsNotFoundResult()
         {
@@ -137,5 +138,127 @@ namespace PizzeriaTests
 
         //    Assert.IsInstanceOfType(actualActionResult, typeof(NotFoundResult));
         //}
+
+
+        public static IEnumerable<object[]> GetProductNamesAndOrderId()
+        {
+            yield return new object[]
+            {
+                "Shrimps",
+                new OkObjectResult(new Order() 
+                {
+                    Pizzas= new List<Product>() { new Margherita()},
+                    Sodas = new List<Soda>() { new Fanta() }
+                })
+            };
+            yield return new object[]
+            {
+                "Fanta",
+                new OkObjectResult(new Order() 
+                {
+                    Pizzas= new List<Product>() {new Margherita()},
+                    Ingredients = new List<Ingredient>() {new Shrimps()}
+                })
+            };
+            yield return new object[]
+            {
+                "Margherita",
+                 new OkObjectResult(new Order() 
+                 {
+                    Sodas = new List<Soda>() { new Fanta() }
+                 })
+            };
+            yield return new object[]
+            {
+                "Non Existing Product",
+                new BadRequestObjectResult("The product cannot be found on your order")
+            };
+        }
+
+        
+        [DataTestMethod]
+        [DynamicData(nameof(GetProductNamesAndOrderId), DynamicDataSourceType.Method)]
+        public void DeleteProductFromOrder_StatusInProgress_ReturnObjectResult(string productName, ObjectResult expectedObjectResult)
+        {
+            var mockOrder = new Order()
+            {
+                Pizzas = new List<Product>() { new Margherita() },
+                Sodas = new List<Soda>() { new Fanta() },
+                Ingredients = new List<Ingredient>() { new Shrimps() },
+                Status = Status.InProgress
+            };
+            Orders = Orders.GetOrders();
+            Orders.Queue.Add(mockOrder);
+
+            var controller = new OrdersController();
+            var actual = controller.DeleteProductFromOrder(productName, mockOrder.Id);
+
+            Assert.IsInstanceOfType(actual, expectedObjectResult.GetType());
+        }
+
+        public static IEnumerable<object[]> GetOrdersDifferentStatus()
+        {
+            yield return new object[]
+            {
+                "Margherita",
+                new Order()
+                {
+                    Pizzas= new List<Product>() { new Margherita()},
+                    Sodas = new List<Soda>() { new Fanta() },
+                    Status= Status.InProgress
+                },
+
+                new OkObjectResult(new Order()
+                {
+                    Sodas = new List<Soda>() { new Fanta() }
+                })
+            };
+            yield return new object[]
+            {
+                "Margherita",
+                new Order()
+                {
+                    Pizzas= new List<Product>() { new Margherita()},
+                    Sodas = new List<Soda>() { new Fanta() },
+                    Status= Status.Submitted
+                },
+                new BadRequestObjectResult("Your order is not in progress so you can not delete products from it.")
+            };
+            yield return new object[]
+            {
+                "Margherita",
+                 new Order()
+                 {
+                    Pizzas= new List<Product>() { new Margherita()},
+                    Sodas = new List<Soda>() { new Fanta() },
+                    Status= Status.Delivered
+                 },
+                 new BadRequestObjectResult("Your order is not in progress so you can not delete products from it.")
+            };
+            yield return new object[]
+            {
+                "Margherita",
+                new Order()
+                {
+                    Pizzas= new List<Product>() { new Margherita()},
+                    Sodas = new List<Soda>() { new Fanta() },
+                    Status= Status.Cancelled
+                },
+                new BadRequestObjectResult("Your order is not in progress so you can not delete products from it.")
+            };
+                    }
+
+        [DataTestMethod]
+        [DynamicData(nameof(GetOrdersDifferentStatus), DynamicDataSourceType.Method)]
+        public void DeleteProductFromOrder_DifferentStatus_ReturnObjectResult(string productName, Order order,ObjectResult expectedObjectResult)
+        {
+            Orders = Orders.GetOrders();
+            Orders.Queue.Add(order);
+
+            var controller = new OrdersController();
+            var actual = controller.DeleteProductFromOrder(productName, order.Id);
+
+            Assert.IsInstanceOfType(actual, expectedObjectResult.GetType());
+        }
     }
 }
