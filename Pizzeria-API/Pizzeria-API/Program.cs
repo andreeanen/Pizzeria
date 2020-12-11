@@ -17,18 +17,7 @@ namespace Pizzeria_API
     {
         public static void Main(string[] args)
         {
-            //data only to calculate sum on order
-            //Order order = new Order()
-            //{
-            //    Pizzas = new List<Product>() { new Margherita() },
-            //    Sodas = new List<Soda>() { new CocaCola() },
-            //    Ingredients = new List<Ingredient>() { new Shrimps() }
-            //};
-            //var sumCalculator = new OrderSumCalculator();
-            //var total = sumCalculator.CalculateOrderSum(order);
-
             CreateHostBuilder(args).Build().Run();
-
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

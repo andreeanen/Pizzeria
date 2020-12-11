@@ -126,7 +126,6 @@ namespace Pizzeria_API.Controllers
                 return NotFound();
             }
 
-            //var order =  new Order(); //{ Pizzas= new List<Product>(){ new Margherita()} };
             var pizza = Menu.Pizzas.Where(p => p.Name.ToLower() == productName.ToLower()).FirstOrDefault();
             var soda = Menu.Sodas.Where(s => s.Name.ToLower() == productName.ToLower()).FirstOrDefault();
             var ingredient = Menu.Ingredients.Where(i => i.Name.ToLower() == productName.ToLower()).FirstOrDefault();
