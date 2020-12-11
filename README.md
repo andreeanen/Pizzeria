@@ -3,6 +3,12 @@
 
 ### Laboration 3: Pizzerian
 
+
+#### Motivation för implementation av design patterns: 
+1. Vi använde oss av factory method design pattern för att skapa pizzor, läsk och ingredienser. Vi skapade två olika factories på grund av att modellen för en pizza har en property (en lista av ingredienser) som läsk eller ingrediens inte har. Så det finns en ProductFactory som skapar pizzor och en generisk ItemFactory<T> som skapar läsk eller extra ingredienser. Vi valde att implementera factory method design pattern för att kontrollera klassinstansiering och för att abstrahera processen för objektgenerering.
+2. Vi använde oss av visitor design pattern för att räkna ut totalsumman av alla element som finns på en order (OrderSumCalculator är vår visitor klass). Vi valde att använda visitor design pattern för att separera logiken från order-modellen. Detta gör det möjligt att skapa en datamodell med begränsad intern funktionalitet och sätter upp en visitor som utför operationerna på data.
+3. Vi använde oss av singelton design pattern för att hantera skapandet av en meny (Menu) och av ordrar (Orders). Vi valde att använda singleton design pattern för att kontrollera klassinstansiering och säkerställa att endast ett objekt av respektive klass skapas. Alla ytterligare referenser till objekt i singleton-klassen hänvisar till samma instans.
+
 #### Introduktion och syfte
 Målet är att testa på olika designmönster i praktiken. Att lära sig avgöra var de olika
 designmönstren underlättar koden, samt se hur kod kan fungera i praktiken.
