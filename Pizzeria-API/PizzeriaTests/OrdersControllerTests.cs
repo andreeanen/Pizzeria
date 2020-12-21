@@ -52,8 +52,12 @@ namespace PizzeriaTests
         public void GetOrder_IdExists_Returns200()
         {
             var controller = new OrdersController();
+            var mockOrder = new Order();
+            var mockOrderId = mockOrder.Id;
+            Orders = Orders.GetOrders();
+            Orders.Queue.Add(mockOrder);
 
-            var objectResult = controller.GetOrder(1) as OkObjectResult;
+            var objectResult = controller.GetOrder(mockOrderId) as OkObjectResult;
             var actualStatusCode = objectResult.StatusCode;
 
             Assert.AreEqual(200, actualStatusCode);
@@ -74,12 +78,14 @@ namespace PizzeriaTests
         public void GetOrder_WhenCalled_ReturnsOrderWithSameId()
         {
             var controller = new OrdersController();
+            var mockOrder = new Order();
+            Orders = Orders.GetOrders();
+            Orders.Queue.Add(mockOrder);
 
-            var expectedOrder = new Order() { Id = 1 };
-            var okResult = controller.GetOrder(1) as OkObjectResult;
+            var okResult = controller.GetOrder(mockOrder.Id) as OkObjectResult;
             var actualOrder = okResult.Value as Order;
 
-            Assert.AreEqual(expectedOrder.Id, actualOrder.Id);
+            Assert.AreEqual(mockOrder.Id, actualOrder.Id);
         }
 
         [DataTestMethod]

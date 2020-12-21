@@ -19,7 +19,6 @@ namespace Pizzeria_API.Data
             if (_instance is null)
             {
                 _instance = new Orders();
-                
             }
 
             return _instance;
