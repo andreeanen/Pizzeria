@@ -318,8 +318,11 @@ namespace PizzeriaTests
         public void UpdateOrder_WhenCalled_ReturnsObjectResult(string action, IActionResult expectedObjectResult)
         {
             var controller = new OrdersController();
+            var mockOrder = new Order();
+            Orders = Orders.GetOrders();
+            Orders.Queue.Add(mockOrder);
 
-            var actualResult = controller.UpdateOrder(1, action, "product name");
+            var actualResult = controller.UpdateOrder(mockOrder.Id, action, "product name");
             var expectedResult = expectedObjectResult.GetType();
 
             Assert.IsInstanceOfType(actualResult, expectedResult);
